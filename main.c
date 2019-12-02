@@ -41,19 +41,14 @@ double integral(double (*f)(double),
     double h = (b - a) / (2 * n);
     double sum = 0.0;
     long long N = 2 * n;
-    double *buffer = malloc(sizeof(double) * (N + 1));
-    
-    #pragma omp parallel for
-    for (long long k = 0; k <= N; ++k) {
-        buffer[k] = f(a + k * h);
+    double sum1 = 0.0;
+    double sum2 = 0.0;
+    #pragma omp parallel for reduction(+:sum1) reduction(+:sum2)
+    for (long long j = 1; j < N; j += 2) {
+        sum1 += f(a + j * h);
+        sum2 += f(a + (j + 1) * h);
     }
-
-    #pragma omp parallel for reduction(+:sum)
-    for (long long k = 1; k <= N - 1; k += 2) {
-        sum += buffer[k - 1]  + 4 * buffer[k] + buffer[k + 1];
-    }
-    
-    free(buffer);
+    sum += f(a) - f(b) + 4 * sum1 + 2 * sum2;
     return sum * h / 3;
 }
 
@@ -63,12 +58,35 @@ double integral_base(double (*f)(double), const double a, const double b,
     double sum = 0.0;
     long long N = 2 * n;
 
-    for (long long k = 1; k <= N - 1; k += 2) {
-        double x_k = a + k * h;
-        sum += f(x_k - h)  + 4 * f(x_k)+ f(x_k + h);
+    sum += f(a);
+    for (long long j = 1; j <= N - 1; ++j) {
+        if (j % 2 == 1) {
+            sum += 4 * f(a + j * h);
+        } else {
+            sum += 2 * f(a + j * h);
+        }
     }
+    sum += f(b);
     return sum * h / 3;
 }
+
+
+double integral_single(double (*f)(double), const double a, const double b,         
+                const long long n) {
+    double h = (b - a) / (2 * n);
+    double sum = 0.0;
+    long long N = 2 * n;
+
+    double sum1 = 0.0;
+    double sum2 = 0.0;
+    for (long long j = 1; j < N; j += 2) {
+        sum1 += f(a + j * h);
+        sum2 += f(a + (j + 1) * h);
+    }
+    sum += f(a) - f(b) + 4 * sum1 + 2 * sum2;
+    return sum * h / 3;
+}
+
 
 int main(int argc, char **argv) {
     int mode;
@@ -93,7 +111,12 @@ int main(int argc, char **argv) {
         bench_timer_start();
         result = integral_base(f3, a, b, n);
         bench_timer_end();
+    } else if (mode == 5) {
+        bench_timer_start();
+        result = integral_single(f3, a, b, n);
+        bench_timer_end();
     }
+    //printf("%lf\n", result);
     bench_timer_print();
     return result;
 }
