@@ -52,7 +52,7 @@ double integral(double (*f)(double),
     return sum * h / 3;
 }
 
-double integral_base(double (*f)(double), const double a, const double b,         
+double integral_with_check(double (*f)(double), const double a, const double b,         
                 const long long n) {
     double h = (b - a) / (2 * n);
     double sum = 0.0;
@@ -67,6 +67,18 @@ double integral_base(double (*f)(double), const double a, const double b,
         }
     }
     sum += f(b);
+    return sum * h / 3;
+}
+
+double integral_base(double (*f)(double), const double a, const double b,         
+                const long long n) {
+    double h = (b - a) / (2 * n);
+    double sum = 0.0;
+    long long N = 2 * n;
+    for (long long k = 1; k <= N - 1; k += 2) {
+        double x_k = a + k * h;
+        sum += f(x_k - h)  + 4 * f(x_k)+ f(x_k + h);
+	}
     return sum * h / 3;
 }
 
@@ -114,6 +126,10 @@ int main(int argc, char **argv) {
     } else if (mode == 5) {
         bench_timer_start();
         result = integral_single(f3, a, b, n);
+        bench_timer_end();
+    } else if (mode == 6) {
+    	bench_timer_start();
+        result = integral_with_check(f3, a, b, n);
         bench_timer_end();
     }
     //printf("%lf\n", result);
