@@ -1,0 +1,51 @@
+Sender: LSF System <lsfadmin@polus-c4-ib.bmc.hpc.cs.msu.ru>
+Subject: Job 526542: <# this file was automaticly created by mpisubmit.pl script for edu-cmc-skpod19-320-11 #;source /polusfs/setenv/setup.SMPI;#BSUB -n 1;#BSUB -W 00:15;#BSUB -o integral.%J.out;#BSUB -e integral.%J.err;OMP_NUM_THREADS=1 mpiexec integral 3 0 1 300000000> in cluster <MSUCluster> Done
+
+Job <# this file was automaticly created by mpisubmit.pl script for edu-cmc-skpod19-320-11 #;source /polusfs/setenv/setup.SMPI;#BSUB -n 1;#BSUB -W 00:15;#BSUB -o integral.%J.out;#BSUB -e integral.%J.err;OMP_NUM_THREADS=1 mpiexec integral 3 0 1 300000000> was submitted from host <polus-ib.bmc.hpc.cs.msu.ru> by user <edu-cmc-skpod19-320-11> in cluster <MSUCluster> at Mon Dec 16 13:19:55 2019
+Job was executed on host(s) <polus-c4-ib.bmc.hpc.cs.msu.ru>, in queue <short>, as user <edu-cmc-skpod19-320-11> in cluster <MSUCluster> at Mon Dec 16 13:29:25 2019
+</home_edu/edu-cmc-skpod19-320/edu-cmc-skpod19-320-11> was used as the home directory.
+</home_edu/edu-cmc-skpod19-320/edu-cmc-skpod19-320-11/SKPOD/MPI> was used as the working directory.
+Started at Mon Dec 16 13:29:25 2019
+Terminated at Mon Dec 16 13:31:24 2019
+Results reported at Mon Dec 16 13:31:24 2019
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+# this file was automaticly created by mpisubmit.pl script for edu-cmc-skpod19-320-11 #
+source /polusfs/setenv/setup.SMPI
+#BSUB -n 1
+#BSUB -W 00:15
+#BSUB -o integral.%J.out
+#BSUB -e integral.%J.err
+OMP_NUM_THREADS=1 mpiexec integral 3 0 1 300000000
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   118.83 sec.
+    Max Memory :                                 70 MB
+    Average Memory :                             66.12 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              5
+    Max Threads :                                12
+    Run time :                                   119 sec.
+    Turnaround time :                            689 sec.
+
+The output (if any) follows:
+
+#N of intervals: 300000000
+#N of cores: 1
+TIME: 118.511975
+
+
+PS:
+
+Read file <integral.526542.err> for stderr output of this job.
+
